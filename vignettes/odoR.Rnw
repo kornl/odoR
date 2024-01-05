@@ -1,0 +1,41 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage[left=2.5cm,right=2.5cm,top=2cm,bottom=2cm]{geometry}
+
+\title{odoR}
+\author{Kornelius Rohmeyer}
+
+<<OptionsAndLibraries, include=FALSE, message=FALSE>>=
+if (exists("opts_chunk")) {
+  opts_chunk$set(concordance=TRUE)
+  opts_chunk$set(tidy.opts=list(keep.blank.line=FALSE, width.cutoff=95))
+  opts_chunk$set(size="footnotesize")
+  opts_chunk$set(cache=FALSE)
+  opts_chunk$set(message=FALSE)
+  opts_chunk$set(autodep=TRUE)
+}
+options(width=140)
+options(digits=4)
+
+@
+
+
+\begin{document}
+
+% \VignetteEngine{knitr::knitr}
+% \VignetteIndexEntry{odoR}
+
+\section*{Example}
+<<performance-over-time, fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
+library(odoR)
+file <- system.file("extdata", "sterilium100.csv", package = "odoR")
+dat <- read.eNase(file)
+print(plot.eNase(dat))
+@
+
+\end{document}

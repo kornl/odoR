@@ -1,0 +1,11 @@
+exportPattern("^[[:alpha:]]+")
+
+importFrom("methods", "new")
+importFrom("utils", "timestamp")
+importFrom("jsonlite", "fromJSON")
+importFrom("tidyr", "gather")
+importFrom("dplyr", "group_by", "summarize")
+importFrom("purrr", "%>%", "pluck")
+importFrom("lubridate", "ymd_hms")
+importFrom("readr", "read_csv")
+importFrom("ggplot2", "aes", "aes_string", "facet_wrap", "geom_hline", "geom_line", "geom_vline", "ggplot", "ggtitle")
