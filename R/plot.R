@@ -1,3 +1,20 @@
+#' Plots the data of a single data set.
+#'
+#' Plots the data of a single data set.
+#'
+#' For details ...
+#'
+#' @param x
+#' @return A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
+#' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
+#' @seealso \code{\link{ggplot}}
+#' @keywords hplot
+#' @examples
+#'
+#' rnorm(100)
+#'
+#' @export plot.eNase
+#'
 plot.eNase <- function (x) {
   dat <-x[["data_long"]]
   baseline <- as.data.frame(x[["baseline.data"]])

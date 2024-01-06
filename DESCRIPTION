@@ -6,7 +6,10 @@ Author: c(person("Kornelius", "Rohmeyer", role = c("aut", "cre"),  email = "rohm
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-Imports: dplyr, jsonlite, methods, tidyr, purrr, lubridate, readr, ggplot2
+Depends:
+    R (>= 3.0.0)
+Imports: 
+    dplyr, jsonlite, methods, tidyr, purrr, lubridate, readr, ggplot2
 Suggests:
     knitr
 VignetteBuilder: knitr
