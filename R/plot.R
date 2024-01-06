@@ -5,7 +5,7 @@
 #' For details ...
 #'
 #' @param x object to plot
-#' @return A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
+#' @return A ggplot2 graph object.
 #' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
 #' @seealso \code{\link{ggplot}}
 #' @keywords hplot

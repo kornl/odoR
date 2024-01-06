@@ -7,7 +7,7 @@ utils::globalVariables(c("type", "value"))
 #' For details ...
 #'
 #' @param filename The name of the file which the data are to be read from.
-#' @return A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
+#' @return A ggplot2 graph object.
 #' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
 #' @seealso \code{\link{ggplot}}
 #' @keywords IO

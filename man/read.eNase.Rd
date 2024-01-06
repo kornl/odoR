@@ -10,7 +10,7 @@ read.eNase(filename)
 \item{filename}{The name of the file which the data are to be read from.}
 }
 \value{
-A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
+A ggplot2 graph object.
 }
 \description{
 Reads the data of a single data set.

@@ -10,7 +10,7 @@
 \item{x}{object to plot}
 }
 \value{
-A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
+A ggplot2 graph object.
 }
 \description{
 Plots the data of a single data set.
