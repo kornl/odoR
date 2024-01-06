@@ -22,7 +22,7 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \describe{
 \item{\code{meta.data}}{meta data}
 
-\item{\code{baseline.data}}{baseline data}
+\item{\code{data_wide}}{data in wide format}
 }
 \if{html}{\out{</div>}}
 }

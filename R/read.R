@@ -42,7 +42,7 @@ read.eNase <- function (filename) {
   change$baseline <- t(baseline.data[, -1])[,1]
   change$change <- change$baseline - change$mean
 
-  return(list(data_wide=data_wide, data_long=data_long, baseline.data=baseline.data, change=change,
+  return(eNoseMeasurement$new(data_wide=data_wide, data_long=data_long, baseline.data=baseline.data, change=change,
               name=name, start=start, stop=stop,
               start.probe=start.probe, stop.probe=stop.probe, meta.data=json.meta.data))
 }

@@ -15,16 +15,36 @@ eNoseMeasurement <-
           list(
             #' @field meta.data meta data
             meta.data = NULL,
-            #' @field baseline.data baseline data
-            baseline.data = NULL,
-            json.meta.data = NULL,
-            name = NULL,
-            start = NULL,
-            stop = NULL,
-            events = NULL,
-            start.probe = NULL,
-            stop.probe = NULL,
-            data_wide = NULL,
-            data_long = NULL
+            #' @field data_wide data in wide format
+            data_wide=NULL,
+            data_long=NULL,
+            baseline.data=NULL,
+            change=NULL,
+            name=NULL,
+            start=NULL,
+            stop=NULL,
+            start.probe=NULL,
+            stop.probe=NULL,
+            initialize = function(meta.data = NULL,
+                                  data_wide=NULL,
+                                  data_long=NULL,
+                                  baseline.data=NULL,
+                                  change=NULL,
+                                  name=NULL,
+                                  start=NULL,
+                                  stop=NULL,
+                                  start.probe=NULL,
+                                  stop.probe=NULL) {
+              self$meta.data <- meta.data
+              self$data_wide <- data_wide
+              self$data_long <- data_long
+              self$baseline.data <- baseline.data
+              self$change <- change
+              self$name <- name
+              self$start <- start
+              self$stop <- stop
+              self$start.probe <- start.probe
+              self$stop.probe <- stop.probe
+            }
           )
   )
