@@ -1,19 +1,22 @@
-# Hello, world!
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
 utils::globalVariables(c("type", "value"))
 
+#' Reads the data of a single data set.
+#'
+#' Reads the data of a single data set.
+#'
+#' For details ...
+#'
+#' @param filename The name of the file which the data are to be read from.
+#' @return A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
+#' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
+#' @seealso \code{\link{ggplot}}
+#' @keywords IO
+#' @examples
+#'
+#' rnorm(100)
+#'
+#' @export plot.eNase
+#'
 read.eNase <- function (filename) {
   meta.data <- read_csv(filename, skip = 1, n_max=1, col_names = FALSE, show_col_types = FALSE)
   baseline.data <- read_csv(filename, skip = 3, n_max=1, col_names = FALSE, show_col_types = FALSE)

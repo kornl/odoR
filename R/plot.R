@@ -4,7 +4,7 @@
 #'
 #' For details ...
 #'
-#' @param x
+#' @param x object to plot
 #' @return A ggplot2 graph object \code{\link{graphMCP}} or \code{\link{entangledMCP}}.
 #' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
 #' @seealso \code{\link{ggplot}}
