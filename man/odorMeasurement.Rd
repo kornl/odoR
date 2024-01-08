@@ -117,7 +117,7 @@ Model the baseline (default: as a polynomial of degree 2)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$model_baseline(
   polynomial_degree = 2,
-  use_data_after_measurement_for_baseline = FALSE
+  use_data_after_measurement_for_baseline = TRUE
 )}\if{html}{\out{</div>}}
 }
 
@@ -127,7 +127,7 @@ Model the baseline (default: as a polynomial of degree 2)
 \item{\code{polynomial_degree}}{Degree of polynomial to fit. Default is 2.}
 
 \item{\code{use_data_after_measurement_for_baseline}}{Should the data after the exposure to the odor also be used?
-Default is FALSE since there may still be effects from the odor. On the other hand using the data would reduce extrapolation errors.}
+Default is TRUE to reduce extrapolation errors. If there are still major effects from the odor after the measurement, it could make sense to set this to FALSE.}
 }
 \if{html}{\out{</div>}}
 }
