@@ -69,20 +69,35 @@ odorMeasurement <-
               self$start_probe <- start_probe
               self$stop_probe <- stop_probe
             },
-            model_baseline = function(polynomial_degree=2, use_data_after_measurement_for_baseline=TRUE) {
+            #' @description
+            #' Model the baseline (default: as a polynomial of degree 2)
+            #' @param polynomial_degree Degree of polynomial to fit. Default is 2.
+            #' @param use_data_after_measurement_for_baseline Should the data after the exposure to the odor also be used?
+            #' Default is FALSE since there may still be effects from the odor. On the other hand using the data would reduce extrapolation errors.
+            model_baseline = function(polynomial_degree=2, use_data_after_measurement_for_baseline=FALSE) {
               base_line_models <- list()
+              data_long <- self$data_long
+              for(i in 1:64) {
+                subdata <- data_long[data_long$type==paste("ch",i,sep="")
+                                     & (data_long$timestamp < self$start_probe | (data_long$timestamp > self$stop_probe & use_data_after_measurement_for_baseline)),]
+                mod <- lm(value ~ poly(timestamp, 2), data=subdata)
+                base_line_models[[i]] <- mod
+              }
+              self$base_line_models <- base_line_models
+              return(invisible(self))            },
+            #' @description
+            #' Correct the data by subtracting the baseline.
+            correct_for_baseline = function() {
               corrected_data_long <- self$data_long
               for(i in 1:64) {
-                subdata <- corrected_data_long[corrected_data_long$type==paste("ch",i,sep="")
-                                     & (corrected_data_long$timestamp < self$start_probe | corrected_data_long$timestamp > self$stop_probe),]
-                mod <- lm(value ~ poly(timestamp, 2), data=subdata)
-                base_line_models <- c(base_line_models, mod)
+                mod <- self$base_line_models[[i]]
                 index <- corrected_data_long$type==paste("ch",i,sep="")
                 corrected_data_long[index, "value"] <- corrected_data_long[index, "value"] - predict(mod, corrected_data_long[index,])
               }
               self$corrected_data_long <- corrected_data_long
-              return(invisible(self))
             },
+            #' @description
+            #' ...
             calculate_response = function() {
               change <- data_long %>%
                 group_by(type) %>%
@@ -92,6 +107,11 @@ odorMeasurement <-
               change$change <- change$baseline - change$mean
               self$change <- change
               return(invisible(self))
+            },
+            #' @description
+            #' ...
+            calculate_features = function() {
+
             }
           )
   )

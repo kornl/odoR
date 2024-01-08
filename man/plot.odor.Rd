@@ -4,7 +4,7 @@
 \alias{plot.odor}
 \title{Plots the data of a single data set.}
 \usage{
-\method{plot}{odor}(x)
+\method{plot}{odor}(x, show_baseline = FALSE)
 }
 \arguments{
 \item{x}{object to plot}

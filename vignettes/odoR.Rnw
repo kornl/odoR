@@ -40,9 +40,12 @@ plot.odor(dat)
 
 \subsection*{Fitting baseline}
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
-dat$model_baseline()
+dat$model_baseline()$correct_for_baseline()
 dat$data_long <- dat$corrected_data_long
 plot.odor(dat)
 @
+
+\subsection*{Outlook/ToDo-List}
+Detect broken channels.
 
 \end{document}
