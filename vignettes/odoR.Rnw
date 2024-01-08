@@ -31,11 +31,28 @@ options(digits=4)
 % \VignetteIndexEntry{odoR}
 
 \section*{Example}
-<<performance-over-time, fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
+<<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 library(odoR)
 file <- system.file("extdata", "sterilium100.csv", package = "odoR")
 dat <- read.odor(file)
-print(plot.odor(dat))
+plot.odor(dat)
+@
+
+\subsection*{Fitting baseline}
+<<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
+base_line_models <- list()
+data_long <- dat$data_long
+for(i in 1:64) {
+  subdata <- data_long[data_long$type==paste("ch",i,sep="")
+                           & (data_long$timestamp < dat$start_probe | data_long$timestamp > dat$stop_probe),]
+  mod <- lm(value ~ poly(timestamp, 2), data=subdata)
+  data_long[data_long$type==paste("ch",i,sep=""),]
+  base_line_models <- c(base_line_models, mod)
+  #print(mod)
+  data_long[data_long$type==paste("ch",i,sep=""), "value"] <- data_long[data_long$type==paste("ch",i,sep=""), "value"] - predict(mod, data_long[data_long$type==paste("ch",i,sep=""),])
+}
+dat$data_long <- data_long
+plot.odor(dat)
 @
 
 \end{document}
