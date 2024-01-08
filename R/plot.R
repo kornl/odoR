@@ -13,9 +13,9 @@
 #'
 #' rnorm(100)
 #'
-#' @export plot.eNase
+#' @export plot.odor
 #'
-plot.eNase <- function (x) {
+plot.odor <- function (x) {
   dat <-x[["data_long"]]
   baseline <- as.data.frame(x[["baseline.data"]])
   #baseline.date <- ymd_hms(strsplit(baseline[1,1], split="|", fixed=TRUE)[[1]][2])

@@ -15,9 +15,9 @@ utils::globalVariables(c("type", "value"))
 #'
 #' rnorm(100)
 #'
-#' @export plot.eNase
+#' @export read.odor
 #'
-read.eNase <- function (filename) {
+read.odor <- function (filename) {
   meta.data <- read_csv(filename, skip = 1, n_max=1, col_names = FALSE, show_col_types = FALSE)
   baseline.data <- read_csv(filename, skip = 3, n_max=1, col_names = FALSE, show_col_types = FALSE)
   json.meta.data <- fromJSON(as.data.frame(meta.data)[1, 2])
@@ -42,7 +42,7 @@ read.eNase <- function (filename) {
   change$baseline <- t(baseline.data[, -1])[,1]
   change$change <- change$baseline - change$mean
 
-  return(eNoseMeasurement$new(data_wide=data_wide, data_long=data_long, baseline.data=baseline.data, change=change,
+  return(odorMeasurement$new(data_wide=data_wide, data_long=data_long, baseline.data=baseline.data, change=change,
               name=name, start=start, stop=stop,
               start.probe=start.probe, stop.probe=stop.probe, meta.data=json.meta.data))
 }

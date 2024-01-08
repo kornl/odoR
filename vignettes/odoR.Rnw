@@ -34,8 +34,8 @@ options(digits=4)
 <<performance-over-time, fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 library(odoR)
 file <- system.file("extdata", "sterilium100.csv", package = "odoR")
-dat <- read.eNase(file)
-print(plot.eNase(dat))
+dat <- read.odor(file)
+print(plot.odor(dat))
 @
 
 \end{document}
