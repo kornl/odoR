@@ -73,8 +73,8 @@ odorMeasurement <-
             #' Model the baseline (default: as a polynomial of degree 2)
             #' @param polynomial_degree Degree of polynomial to fit. Default is 2.
             #' @param use_data_after_measurement_for_baseline Should the data after the exposure to the odor also be used?
-            #' Default is FALSE since there may still be effects from the odor. On the other hand using the data would reduce extrapolation errors.
-            model_baseline = function(polynomial_degree=2, use_data_after_measurement_for_baseline=FALSE) {
+            #' Default is TRUE to reduce extrapolation errors. If there are still major effects from the odor after the measurement, it could make sense to set this to FALSE.
+            model_baseline = function(polynomial_degree=2, use_data_after_measurement_for_baseline=TRUE) {
               base_line_models <- list()
               data_long <- self$data_long
               for(i in 1:64) {

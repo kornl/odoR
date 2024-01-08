@@ -57,6 +57,7 @@ read.odor <- function (filename) {
                          "ch57"="f12", "ch58"="f12", "ch59"="f12",
                          "ch60"="f8", "ch61"="f8", "ch62"="f8",
                          "ch63"="base", "ch64"="base",
+                         "humidity"="humidity", "temperature"="temperature"
                          )[data_long$type]
 
   data_long$feature <- ordered(data_long$feature, levels=sort(unique(data_long$feature)))

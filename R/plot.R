@@ -20,7 +20,7 @@ plot.odor <- function (x, show_baseline=FALSE) {
   baseline <- as.data.frame(x[["baseline_data"]])
   #baseline.date <- ymd_hms(strsplit(baseline[1,1], split="|", fixed=TRUE)[[1]][2])
 
-  plot <- ggplot(dat, aes_string(x="timestamp", y="value")) + geom_line() +  facet_wrap(~feature,  ncol=8, scales = "free")
+  plot <- ggplot(dat, aes_string(x="timestamp", y="value")) + geom_point(size=0) +  facet_wrap(~feature,  ncol=4, scales = "free")
   plot <- plot + geom_vline(xintercept = x[["start"]])
   plot <- plot + geom_vline(xintercept = x[["stop"]])
   plot <- plot + geom_vline(xintercept = x[["start_probe"]])
