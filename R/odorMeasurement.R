@@ -33,6 +33,10 @@ odorMeasurement <-
             start_probe=NULL,
             #' @field stop_probe ...
             stop_probe=NULL,
+            #' @field base_line_models ...
+            base_line_models=NULL,
+            #' @field corrected_data_long ...
+            corrected_data_long=NULL,
             #' @description
             #' Create a eNoseMeasurement object.
             #' @param meta_data meta data
@@ -65,7 +69,18 @@ odorMeasurement <-
               self$start_probe <- start_probe
               self$stop_probe <- stop_probe
             },
-            model_baseline = function() {
+            model_baseline = function(polynomial_degree=2, use_data_after_measurement_for_baseline=TRUE) {
+              base_line_models <- list()
+              corrected_data_long <- self$data_long
+              for(i in 1:64) {
+                subdata <- corrected_data_long[corrected_data_long$type==paste("ch",i,sep="")
+                                     & (corrected_data_long$timestamp < self$start_probe | corrected_data_long$timestamp > self$stop_probe),]
+                mod <- lm(value ~ poly(timestamp, 2), data=subdata)
+                base_line_models <- c(base_line_models, mod)
+                index <- corrected_data_long$type==paste("ch",i,sep="")
+                corrected_data_long[index, "value"] <- corrected_data_long[index, "value"] - predict(mod, corrected_data_long[index,])
+              }
+              self$corrected_data_long <- corrected_data_long
               return(invisible(self))
             },
             calculate_response = function() {
