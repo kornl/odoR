@@ -67,7 +67,8 @@ read.odor <- function (filename) {
   data_long$feature <- ordered(data_long$feature, levels=sort(unique(data_long$feature)))
   data_long$channel <- ordered(data_long$channel, levels=unique(data_long$channel))
 
-  if (compareVersion(meta_data$data$device_info$device_firmware_info$version, "2.1.1")>0)
+  firmware_version <- json_meta_data$data$device_info$device_firmware_info$version
+  if (is.character(firmware_version) && compareVersion(firmware_version, "2.1.1")>0)
     warning("Firmware version is old - newer firmware can give better results!")
 
   return(odorMeasurement$new(data_wide=data_wide, data_long=data_long, baseline_data=baseline_data,

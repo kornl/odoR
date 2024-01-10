@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{object to plot}
+
+\item{show_baseline}{logical whether to show the baseline or not}
 }
 \value{
 A ggplot2 graph object.

@@ -37,6 +37,8 @@ odorMeasurement <-
             base_line_models=NULL,
             #' @field corrected_data_long ...
             corrected_data_long=NULL,
+            #' @field features ...
+            features=NULL,
             #' @description
             #' Create a eNoseMeasurement object.
             #' @param meta_data meta data
@@ -135,7 +137,20 @@ odorMeasurement <-
             #' @description
             #' ...
             calculate_features = function() {
-
+              if (is.null(self$response)) self$calculate_response()
+              self$features <- self$response %>%
+                group_by(feature) %>%
+                summarize(mean_value = mean(value, na.rm = TRUE))
+            },
+            #' @description
+            #' ...
+            spider_plot = function() {
+              if (is.null(self$features)) self$calculate_features()
+              self$features$max <- max(self$features$mean_value)
+              self$features$min <- min(self$features$mean_value)
+              df <- as.data.frame(t(dat$features[,c("max","min","mean_value")]))
+              colnames(df) <- dat$features$feature
+              radarchart(df)
             }
           )
   )

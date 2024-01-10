@@ -50,7 +50,8 @@ plot.odor(dat)
 \subsection*{Calculating Response}
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 dat$calculate_response()
-spider.plot.odor(dat)
+dat$calculate_features()
+dat$spider_plot()
 @
 
 

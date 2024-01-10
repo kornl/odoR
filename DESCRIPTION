@@ -9,7 +9,7 @@ Description: More about what it does (maybe more than one line)
 Depends:
     R (>= 3.0.0)
 Imports: 
-    dplyr, jsonlite, methods, tidyr, purrr, lubridate, readr, ggplot2, R6
+    dplyr, jsonlite, methods, tidyr, purrr, lubridate, readr, ggplot2, R6, fmsb
 Suggests:
     knitr
 VignetteBuilder: knitr

@@ -5,6 +5,7 @@
 #' For details ...
 #'
 #' @param x object to plot
+#' @param show_baseline logical whether to show the baseline or not
 #' @return A ggplot2 graph object.
 #' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
 #' @seealso \code{\link{ggplot}}
@@ -22,7 +23,6 @@ plot.odor <- function (x, show_baseline=FALSE) {
     dat <-x[["data_long"]]
   }
   baseline <- as.data.frame(x[["baseline_data"]])
-  #baseline.date <- ymd_hms(strsplit(baseline[1,1], split="|", fixed=TRUE)[[1]][2])
 
   plot <- ggplot(dat, aes_string(x="timestamp", y="value")) + geom_point(size=0) +  facet_wrap(~feature,  ncol=4, scales = "free")
   plot <- plot + geom_vline(xintercept = x[["start"]])
@@ -36,14 +36,4 @@ plot.odor <- function (x, show_baseline=FALSE) {
   }
   plot <- plot + ggtitle(x[["name"]])
   return(plot)
-}
-
-spider.plot.odor <- function(x) {
-  plot <- ggplot(x$response, aes(x = channel, y = value)) +
-    geom_polygon(fill = "blue") +
-    geom_point(size = 4, color = "white") +
-    coord_polar() +
-    #theme_void() +
-    ggtitle("Spiderplot of Features") +
-    theme(legend.position = "bottom")
 }

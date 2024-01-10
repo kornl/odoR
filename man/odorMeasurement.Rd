@@ -47,6 +47,8 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \item{\code{base_line_models}}{...}
 
 \item{\code{corrected_data_long}}{...}
+
+\item{\code{features}}{...}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,6 +60,7 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \item \href{#method-odorMeasurement-correct_for_baseline}{\code{odorMeasurement$correct_for_baseline()}}
 \item \href{#method-odorMeasurement-calculate_response}{\code{odorMeasurement$calculate_response()}}
 \item \href{#method-odorMeasurement-calculate_features}{\code{odorMeasurement$calculate_features()}}
+\item \href{#method-odorMeasurement-spider_plot}{\code{odorMeasurement$spider_plot()}}
 \item \href{#method-odorMeasurement-clone}{\code{odorMeasurement$clone()}}
 }
 }
@@ -162,6 +165,16 @@ Correct the data by subtracting the baseline.
 ...
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$calculate_features()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-odorMeasurement-spider_plot"></a>}}
+\if{latex}{\out{\hypertarget{method-odorMeasurement-spider_plot}{}}}
+\subsection{Method \code{spider_plot()}}{
+...
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$spider_plot()}\if{html}{\out{</div>}}
 }
 
 }
