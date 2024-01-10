@@ -21,8 +21,8 @@ odorMeasurement <-
             data_long=NULL,
             #' @field baseline_data baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.
             baseline_data=NULL,
-            #' @field change ...
-            change=NULL,
+            #' @field response ...
+            response=NULL,
             #' @field name Name of the measurement. If read from a csv file the value that was in the included JSON meta data in the field name.
             name=NULL,
             #' @field start ...
@@ -43,7 +43,7 @@ odorMeasurement <-
             #' @param data_wide data in wide format
             #' @param data_long data in long format
             #' @param baseline_data baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.
-            #' @param change ...
+            #' @param response ...
             #' @param name ...
             #' @param start ...
             #' @param stop ...
@@ -71,27 +71,45 @@ odorMeasurement <-
             },
             #' @description
             #' Model the baseline (default: as a polynomial of degree 2)
-            #' @param polynomial_degree Degree of polynomial to fit. Default is 2.
             #' @param use_data_after_measurement_for_baseline Should the data after the exposure to the odor also be used?
             #' Default is TRUE to reduce extrapolation errors. If there are still major effects from the odor after the measurement, it could make sense to set this to FALSE.
-            model_baseline = function(polynomial_degree=2, use_data_after_measurement_for_baseline=TRUE) {
+            #' @param method Either exponential, polynomial or power-law.
+            #' @param polynomial_degree Only used if method="polynomial". Degree of polynomial to fit. Default is 2.
+            model_baseline = function(use_data_after_measurement_for_baseline=TRUE, method="polynomial", polynomial_degree=2) {
               base_line_models <- list()
               data_long <- self$data_long
               for(i in 1:64) {
-                subdata <- data_long[data_long$type==paste("ch",i,sep="")
+                subdata <- data_long[data_long$channel==paste("ch",i,sep="")
                                      & (data_long$timestamp < self$start_probe | (data_long$timestamp > self$stop_probe & use_data_after_measurement_for_baseline)),]
-                mod <- lm(value ~ poly(timestamp, 2), data=subdata)
+                subdata$time <- as.numeric(difftime(subdata$timestamp, data_long$timestamp[1], units = "secs"))
+                if (!(method %in% c("exponential", "polynomial", "power-law"))) stop("Method must be either exponential, polynomial or power-law.")
+                if (method == "polynomial") {
+                  mod <- lm(value ~ poly(timestamp, polynomial_degree), data=subdata)
+                } else if (method == "exponential") {
+                  c_est = min(subdata$value)-1
+                  a_est = max(subdata$value)-c_est
+                  mod1 <- lm(log(value-c_est) ~ time, data=subdata)
+                  b_est = -coef(mod1)[2]
+                  mod <- nls(value ~ a * exp(-b * time) + c, start=list(a=a_est, b=b_est, c=c_est), data=subdata)
+                } else if (method == "power-law") {
+                  c_est = min(subdata$value)-1
+                  mod1 <- lm(log(value-c_est) ~ log(time+1), data=subdata)
+                  b_est = -coef(mod1)[2]
+                  a_est = exp(coef(mod1)[1])
+                  mod <- nls(value ~ a * time^(-b) + c, start=list(a=a_est, b=b_est, c=c_est), data=subdata)
+                }
                 base_line_models[[i]] <- mod
               }
               self$base_line_models <- base_line_models
-              return(invisible(self))            },
+              return(invisible(self))
+            },
             #' @description
             #' Correct the data by subtracting the baseline.
             correct_for_baseline = function() {
               corrected_data_long <- self$data_long
               for(i in 1:64) {
                 mod <- self$base_line_models[[i]]
-                index <- corrected_data_long$type==paste("ch",i,sep="")
+                index <- corrected_data_long$channel==paste("ch",i,sep="")
                 corrected_data_long[index, "value"] <- corrected_data_long[index, "value"] - predict(mod, corrected_data_long[index,])
               }
               self$corrected_data_long <- corrected_data_long
@@ -99,13 +117,19 @@ odorMeasurement <-
             #' @description
             #' ...
             calculate_response = function() {
-              change <- data_long %>%
-                group_by(type) %>%
-                summarize(mean = mean(value, na.rm = TRUE))
-
-              change$baseline <- t(baseline_data[, -1])[,1]
-              change$change <- change$baseline - change$mean
-              self$change <- change
+              if (!is.null(self$corrected_data_long)) {
+                dat <- self$corrected_data_long
+              } else {
+                dat <-self$data_long
+              }
+              response <- c()
+              for(i in 1:64) {
+                subdata <- dat[dat$channel==paste("ch",i,sep="")
+                                     & dat$timestamp > self$start_probe & dat$timestamp < self$stop_probe, ]
+                response <- rbind(response, data.frame(channel=paste("ch",i,sep=""), value=mean(subdata$value)))
+              }
+              response$feature <- channel2feature(response$channel)
+              self$response <- response
               return(invisible(self))
             },
             #' @description

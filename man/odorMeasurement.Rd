@@ -32,9 +32,9 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 
 \item{\code{baseline_data}}{baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.}
 
-\item{\code{change}}{...}
+\item{\code{response}}{...}
 
-\item{\code{name}}{...}
+\item{\code{name}}{Name of the measurement. If read from a csv file the value that was in the included JSON meta data in the field name.}
 
 \item{\code{start}}{...}
 
@@ -101,7 +101,7 @@ Create a eNoseMeasurement object.
 
 \item{\code{stop_probe}}{...}
 
-\item{\code{change}}{...}
+\item{\code{response}}{...}
 }
 \if{html}{\out{</div>}}
 }
@@ -116,18 +116,21 @@ A new `eNoseMeasurement` object.
 Model the baseline (default: as a polynomial of degree 2)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$model_baseline(
-  polynomial_degree = 2,
-  use_data_after_measurement_for_baseline = TRUE
+  use_data_after_measurement_for_baseline = TRUE,
+  method = "polynomial",
+  polynomial_degree = 2
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{polynomial_degree}}{Degree of polynomial to fit. Default is 2.}
-
 \item{\code{use_data_after_measurement_for_baseline}}{Should the data after the exposure to the odor also be used?
 Default is TRUE to reduce extrapolation errors. If there are still major effects from the odor after the measurement, it could make sense to set this to FALSE.}
+
+\item{\code{method}}{Either exponential, polynomial or power-law.}
+
+\item{\code{polynomial_degree}}{Only used if method="polynomial". Degree of polynomial to fit. Default is 2.}
 }
 \if{html}{\out{</div>}}
 }
