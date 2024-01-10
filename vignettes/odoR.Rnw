@@ -52,6 +52,9 @@ plot.odor(dat)
 dat$calculate_response()
 dat$calculate_features()
 dat$spider_plot()
+
+dataset <- odorDataset$new()
+dataset$add_measurement(dat)
 @
 
 

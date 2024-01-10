@@ -40,7 +40,7 @@ odorMeasurement <-
             #' @field features ...
             features=NULL,
             #' @description
-            #' Create a eNoseMeasurement object.
+            #' Create a odorMeasurement object.
             #' @param meta_data meta data
             #' @param data_wide data in wide format
             #' @param data_long data in long format
@@ -51,7 +51,7 @@ odorMeasurement <-
             #' @param stop ...
             #' @param start_probe ...
             #' @param stop_probe ...
-            #' @return A new `eNoseMeasurement` object.
+            #' @return A new `odorMeasurement` object.
             initialize = function(meta_data = NULL,
                                   data_wide=NULL,
                                   data_long=NULL,
@@ -148,7 +148,7 @@ odorMeasurement <-
               if (is.null(self$features)) self$calculate_features()
               self$features$max <- max(self$features$mean_value)
               self$features$min <- min(self$features$mean_value)
-              df <- as.data.frame(t(dat$features[,c("max","min","mean_value")]))
+              df <- as.data.frame(t(dat$features[,c("max", "min", "mean_value")]))
               colnames(df) <- dat$features$feature
               radarchart(df)
             }

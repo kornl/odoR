@@ -68,7 +68,7 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \if{html}{\out{<a id="method-odorMeasurement-new"></a>}}
 \if{latex}{\out{\hypertarget{method-odorMeasurement-new}{}}}
 \subsection{Method \code{new()}}{
-Create a eNoseMeasurement object.
+Create a odorMeasurement object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$new(
   meta_data = NULL,
@@ -109,7 +109,7 @@ Create a eNoseMeasurement object.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new `eNoseMeasurement` object.
+A new `odorMeasurement` object.
 }
 }
 \if{html}{\out{<hr>}}
