@@ -26,7 +26,7 @@ odorDataset <-
             #' @param label Optional label of sample that was measured.
             #' @param concentration Optional numerical value of sample concentration that was measured.
             add_measurement = function(measurement, label=NA, concentration=NA) {
-              self$measurements[[length(dataset$measurements)+1]] <- list(measurement, label, concentration)
+              self$measurements[[length(dataset$measurements)+1]] <- list(measurement=measurement, label=label, concentration=concentration)
             },
             #' @description
             #' ...
