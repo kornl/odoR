@@ -36,7 +36,7 @@ options(digits=4)
 \section*{Example}
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 library(odoR)
-file <- system.file("extdata", "sterilium100.csv", package = "odoR")
+file <- system.file("extdata", "Sterillium-100.csv", package = "odoR")
 dat <- read.odor(file)
 plot.odor(dat)
 @
@@ -63,6 +63,18 @@ dataset <- odorDataset$new()
 dataset$add_measurement(dat)
 @
 
+
+<<>>=
+dataset <- odorDataset$new()
+for (file in dir(system.file("extdata", package = "odoR"))) {
+  dat <- read.odor(system.file("extdata", file, package = "odoR"))
+  dat$residualize()
+  dat$spider_plot()
+  filename_information <- strsplit(file, split=c("[-.]"))
+  dataset$add_measurement(dat, filename_information[1], filename_information[2])
+}
+
+@
 
 \subsection*{Outlook/ToDo-List}
 Detect broken channels.
