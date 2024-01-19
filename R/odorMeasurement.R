@@ -106,6 +106,24 @@ odorMeasurement <-
               return(invisible(self))
             },
             #' @description
+            #' Residualize.
+            residualize = function() {
+              data_wide <- self$data_wide
+              for (i in (1:64)[-base_channels]) {
+                y <- paste("ch", i, sep="")
+                f <- as.formula(
+                  paste(y,
+                        paste(c(paste("ch", base_channels, sep=""), "humidity", "temperature"), collapse = " + "),
+                        sep = " ~ "))
+                mod <- lm(f, data = data_wide)
+                data_wide[[y]] <- residuals(mod)
+                attr(data_wide[[y]], "names") <- NULL
+              }
+              corrected_data_long <- gather(data_wide, key=channel, value=value,-timestamp)
+              corrected_data_long$feature <- channel2feature(corrected_data_long$channel)
+              self$corrected_data_long <- corrected_data_long
+            },
+            #' @description
             #' Correct the data by subtracting the baseline.
             correct_for_baseline = function() {
               corrected_data_long <- self$data_long

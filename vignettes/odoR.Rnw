@@ -47,6 +47,12 @@ dat$model_baseline()$correct_for_baseline()
 plot.odor(dat)
 @
 
+\subsection*{Residualize}
+<<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
+dat$residualize()
+plot.odor(dat)
+@
+
 \subsection*{Calculating Response}
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 dat$calculate_response()
