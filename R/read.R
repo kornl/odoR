@@ -27,6 +27,8 @@ channel2feature <- function(x) {
   )[x])
 }
 
+base_channels <- c(1, 2, 15, 16, 17, 18, 19, 20, 21, 31, 32, 33, 34, 47, 48, 49, 50, 63, 64)
+
 utils::globalVariables(c("channel", "value"))
 
 #' Reads the data of a single data set.
