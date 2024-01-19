@@ -131,6 +131,7 @@ odorMeasurement <-
                 response <- rbind(response, data.frame(channel=paste("ch",i,sep=""), value=mean(subdata$value)))
               }
               response$feature <- channel2feature(response$channel)
+              response <- response[response$feature!="base",]
               self$response <- response
               return(invisible(self))
             },
