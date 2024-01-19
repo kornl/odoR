@@ -169,7 +169,7 @@ odorMeasurement <-
               self$features$min <- min(self$features$mean_value)
               df <- as.data.frame(t(dat$features[,c("max", "min", "mean_value")]))
               colnames(df) <- dat$features$feature
-              radarchart(df)
+              radarchart(df, title=self$name)
             }
           )
   )
