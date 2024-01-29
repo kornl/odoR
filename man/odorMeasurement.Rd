@@ -57,6 +57,7 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \itemize{
 \item \href{#method-odorMeasurement-new}{\code{odorMeasurement$new()}}
 \item \href{#method-odorMeasurement-model_baseline}{\code{odorMeasurement$model_baseline()}}
+\item \href{#method-odorMeasurement-residualize}{\code{odorMeasurement$residualize()}}
 \item \href{#method-odorMeasurement-correct_for_baseline}{\code{odorMeasurement$correct_for_baseline()}}
 \item \href{#method-odorMeasurement-calculate_response}{\code{odorMeasurement$calculate_response()}}
 \item \href{#method-odorMeasurement-calculate_features}{\code{odorMeasurement$calculate_features()}}
@@ -137,6 +138,16 @@ Default is TRUE to reduce extrapolation errors. If there are still major effects
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-odorMeasurement-residualize"></a>}}
+\if{latex}{\out{\hypertarget{method-odorMeasurement-residualize}{}}}
+\subsection{Method \code{residualize()}}{
+Residualize.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$residualize()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-odorMeasurement-correct_for_baseline"></a>}}

@@ -4,19 +4,22 @@
 \alias{read.odor}
 \title{Reads the data of a single data set.}
 \usage{
-read.odor(filename)
+read.odor(filename, warn = TRUE)
 }
 \arguments{
 \item{filename}{The name of the file which the data are to be read from.}
+
+\item{warn}{Boolean whether warnings should be given about missing events and older firmware.}
 }
 \value{
-A ggplot2 graph object.
+An \code{\link{odorDataset}} S6 object.
 }
 \description{
-Reads the data of a single data set.
+Reads the data of a single data set. Currently only csv files from Smell Inspector from Smart Nanotubes are supported.
 }
 \details{
-For details ...
+Warnings are given when no events are recorded and when the firmware is rather old.
+The later could result in channels having constant readings due to sensor values out of the supported range.
 }
 \examples{
 
@@ -24,7 +27,7 @@ rnorm(100)
 
 }
 \seealso{
-\code{\link{ggplot}}
+\code{\link{odorDataset}}
 }
 \author{
 Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
