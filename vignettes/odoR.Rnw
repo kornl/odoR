@@ -25,6 +25,7 @@ if (exists("opts_chunk")) {
 options(width=140)
 options(digits=4)
 
+library(purrr)
 @
 
 
@@ -36,7 +37,7 @@ options(digits=4)
 \section*{Example}
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 library(odoR)
-file <- system.file("extdata", "Sterillium-100.csv", package = "odoR")
+file <- system.file("extdata", "Sterillium-K100.csv", package = "odoR")
 dat <- read.odor(file)
 plot.odor(dat)
 @
@@ -67,13 +68,16 @@ dataset$add_measurement(dat)
 <<>>=
 dataset <- odorDataset$new()
 for (file in dir(system.file("extdata", package = "odoR"))) {
+  if (file=="Sterillium-K100.csv") next
   dat <- read.odor(system.file("extdata", file, package = "odoR"))
   dat$residualize()
   dat$spider_plot()
-  filename_information <- strsplit(file, split=c("[-.]"))
-  dataset$add_measurement(dat, filename_information[1], filename_information[2])
+  filename_information <- strsplit(file, split=c("[-.]"))[[1]]
+  x <- pluck(filename_information, 2)
+  concentration <- ifelse(!is.null(x) && startsWith(x, "K"), substr(x, 2, nchar(x)), NA)
+  dataset$add_measurement(dat, filename_information[1], as.numeric())
 }
-
+dataset$spider_plot()
 @
 
 \subsection*{Outlook/ToDo-List}

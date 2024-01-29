@@ -61,6 +61,7 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \item \href{#method-odorMeasurement-correct_for_baseline}{\code{odorMeasurement$correct_for_baseline()}}
 \item \href{#method-odorMeasurement-calculate_response}{\code{odorMeasurement$calculate_response()}}
 \item \href{#method-odorMeasurement-calculate_features}{\code{odorMeasurement$calculate_features()}}
+\item \href{#method-odorMeasurement-get_features}{\code{odorMeasurement$get_features()}}
 \item \href{#method-odorMeasurement-spider_plot}{\code{odorMeasurement$spider_plot()}}
 \item \href{#method-odorMeasurement-clone}{\code{odorMeasurement$clone()}}
 }
@@ -176,6 +177,16 @@ Correct the data by subtracting the baseline.
 ...
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$calculate_features()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-odorMeasurement-get_features"></a>}}
+\if{latex}{\out{\hypertarget{method-odorMeasurement-get_features}{}}}
+\subsection{Method \code{get_features()}}{
+...
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$get_features()}\if{html}{\out{</div>}}
 }
 
 }

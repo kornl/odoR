@@ -31,12 +31,24 @@ odorDataset <-
             #' @description
             #' ...
             spider_plot = function() {
-              if (is.null(self$features)) self$calculate_features()
-              self$features$max <- max(self$features$mean_value)
-              self$features$min <- min(self$features$mean_value)
-              df <- as.data.frame(t(dat$features[,c("max", "min", "mean_value")]))
-              colnames(df) <- dat$features$feature
-              radarchart(df)
+              df <- c()
+              labels <- c()
+              for (m in measurements) {
+                if (is.null(df)) {
+                  df <- m$measurement$get_features()
+                  df$max <- NULL
+                  df$min <- NULL
+                } else {
+                  df <- full_join(df, m$measurement$get_features()[c("feature", "mean_value")], by = "feature")
+                }
+                labels <- c(labels, m$label)
+              }
+              df$max <- max(df[,-1])
+              df$min <- min(df[,-1])
+              df2 <- as.data.frame(df[c("max", "min", setdiff(names(df), c("max", "min", "feature")))])
+              colnames(df2) <- c("max", "min", labels)
+              rownames(df2) <- df$feature
+              radarchart(as.data.frame(t(df2)), maxmin=TRUE)
             }
           )
   )

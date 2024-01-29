@@ -163,6 +163,12 @@ odorMeasurement <-
             },
             #' @description
             #' ...
+            get_features = function() {
+              if (is.null(self$features)) self$calculate_features()
+              return(self$features)
+            },
+            #' @description
+            #' ...
             spider_plot = function() {
               if (is.null(self$features)) self$calculate_features()
               self$features$max <- max(self$features$mean_value)
