@@ -33,14 +33,16 @@ utils::globalVariables(c("channel", "value"))
 
 #' Reads the data of a single data set.
 #'
-#' Reads the data of a single data set.
+#' Reads the data of a single data set. Currently only csv files from Smell Inspector from Smart Nanotubes are supported.
 #'
-#' For details ...
+#' Warnings are given when no events are recorded and when the firmware is rather old.
+#' The later could result in channels having constant readings due to sensor values out of the supported range.
 #'
 #' @param filename The name of the file which the data are to be read from.
-#' @return A ggplot2 graph object.
+#' @param warn Boolean whether warnings should be given about missing events and older firmware.
+#' @return An \code{\link{odorDataset}} S6 object.
 #' @author Kornelius Rohmeyer \email{rohmeyer@@small-projects.de}
-#' @seealso \code{\link{ggplot}}
+#' @seealso \code{\link{odorDataset}}
 #' @keywords IO
 #' @examples
 #'
@@ -48,7 +50,7 @@ utils::globalVariables(c("channel", "value"))
 #'
 #' @export read.odor
 #'
-read.odor <- function (filename) {
+read.odor <- function (filename, warn=TRUE) {
   meta_data <- read_csv(filename, skip = 1, n_max=1, col_names = FALSE, show_col_types = FALSE)
   baseline_data <- read_csv(filename, skip = 3, n_max=1, col_names = FALSE, show_col_types = FALSE)
   json_meta_data <- fromJSON(as.data.frame(meta_data)[1, 2])
@@ -56,8 +58,8 @@ read.odor <- function (filename) {
   start <- ymd_hms(pluck(json_meta_data, "data", "started_at"))
   stop <- ymd_hms(pluck(json_meta_data, "data", "stopped_at"))
   events <- pluck(json_meta_data, "data", "measurement_events")
-  start_probe <- tryCatch(ymd_hms(events[1,2]), error=function(err) {warning(paste("No start event in file:", filename, sep=" ")); NA})
-  stop_probe <- tryCatch(ymd_hms(events[2,2]), error=function(err) {warning(paste("No end event in file:", filename, sep=" ")); NA} )
+  start_probe <- tryCatch(ymd_hms(events[1,2]), error=function(err) {if (warn) warning(paste("No start event in file:", filename, sep=" ")); NA})
+  stop_probe <- tryCatch(ymd_hms(events[2,2]), error=function(err) {if (warn) warning(paste("No end event in file:", filename, sep=" ")); NA} )
   data <- read_csv(filename, skip = 4, show_col_types = FALSE)
   data$timestamp <- ymd_hms(data[[1]])
   data_wide <- data[,-1]
@@ -70,7 +72,7 @@ read.odor <- function (filename) {
   data_long$channel <- ordered(data_long$channel, levels=unique(data_long$channel))
 
   firmware_version <- json_meta_data$data$device_info$device_firmware_info$version
-  if (is.character(firmware_version) && compareVersion(firmware_version, "2.1.1")>0)
+  if (warn & is.character(firmware_version) && compareVersion(firmware_version, "2.1.1")>0)
     warning("Firmware version is old - newer firmware can give better results!")
 
   return(odorMeasurement$new(data_wide=data_wide, data_long=data_long, baseline_data=baseline_data,
