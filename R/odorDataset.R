@@ -33,7 +33,7 @@ odorDataset <-
             spider_plot = function() {
               df <- c()
               labels <- c()
-              for (m in measurements) {
+              for (m in self$measurements) {
                 if (is.null(df)) {
                   df <- m$measurement$get_features()
                   df$max <- NULL
