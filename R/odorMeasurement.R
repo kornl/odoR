@@ -21,23 +21,23 @@ odorMeasurement <-
             data_long=NULL,
             #' @field baseline_data baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.
             baseline_data=NULL,
-            #' @field response ...
+            #' @field response data.frame of the calculated responses from this measurement for each sensor
             response=NULL,
             #' @field name Name of the measurement. If read from a csv file the value that was in the included JSON meta data in the field name.
             name=NULL,
-            #' @field start ...
+            #' @field start POSIXct object representing the start time of the measurement
             start=NULL,
-            #' @field stop ...
+            #' @field stop POSIXct object representing the stop/end time of the measurement
             stop=NULL,
-            #' @field start_probe ...
-            start_probe=NULL,
-            #' @field stop_probe ...
-            stop_probe=NULL,
-            #' @field base_line_models ...
+            #' @field start_exposure POSIXct object representing the start time of exposure to a test substance
+            start_exposure=NULL,
+            #' @field stop_exposure POSIXct object representing the end time of exposure to a test substance
+            stop_exposure=NULL,
+            #' @field base_line_models list of models to fit the base line
             base_line_models=NULL,
-            #' @field corrected_data_long ...
+            #' @field corrected_data_long baseline corrected or residualized data
             corrected_data_long=NULL,
-            #' @field features ...
+            #' @field features Summarized responses by features
             features=NULL,
             #' @description
             #' Create a odorMeasurement object.
@@ -45,12 +45,11 @@ odorMeasurement <-
             #' @param data_wide data in wide format
             #' @param data_long data in long format
             #' @param baseline_data baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.
-            #' @param response ...
-            #' @param name ...
-            #' @param start ...
-            #' @param stop ...
-            #' @param start_probe ...
-            #' @param stop_probe ...
+            #' @param name Name of the measurement as character string
+            #' @param start POSIXct object representing the start time of the measurement
+            #' @param stop POSIXct object representing the stop/end time of the measurement
+            #' @param start_exposure POSIXct object representing the start time of exposure to a test substance
+            #' @param stop_exposure POSIXct object representing the end time of exposure to a test substance
             #' @return A new `odorMeasurement` object.
             initialize = function(meta_data = NULL,
                                   data_wide=NULL,
@@ -59,8 +58,8 @@ odorMeasurement <-
                                   name=NULL,
                                   start=NULL,
                                   stop=NULL,
-                                  start_probe=NULL,
-                                  stop_probe=NULL) {
+                                  start_exposure=NULL,
+                                  stop_exposure=NULL) {
               self$meta_data <- meta_data
               self$data_wide <- data_wide
               self$data_long <- data_long
@@ -68,8 +67,8 @@ odorMeasurement <-
               self$name <- name
               self$start <- start
               self$stop <- stop
-              self$start_probe <- start_probe
-              self$stop_probe <- stop_probe
+              self$start_exposure <- start_exposure
+              self$stop_exposure <- stop_exposure
             },
             #' @description
             #' Model the baseline (default: as a polynomial of degree 2)
@@ -82,7 +81,7 @@ odorMeasurement <-
               data_long <- self$data_long
               for(i in 1:64) {
                 subdata <- data_long[data_long$channel==paste("ch",i,sep="")
-                                     & (data_long$timestamp < self$start_probe | (data_long$timestamp > self$stop_probe & use_data_after_measurement_for_baseline)),]
+                                     & (data_long$timestamp < self$start_exposure | (data_long$timestamp > self$stop_exposure & use_data_after_measurement_for_baseline)),]
                 subdata$time <- as.numeric(difftime(subdata$timestamp, data_long$timestamp[1], units = "secs"))
                 if (!(method %in% c("exponential", "polynomial", "power-law"))) stop("Method must be either exponential, polynomial or power-law.")
                 if (method == "polynomial") {
@@ -135,7 +134,8 @@ odorMeasurement <-
               self$corrected_data_long <- corrected_data_long
             },
             #' @description
-            #' ...
+            #' Calculate the responses for each sensor as the mean of the values of the corrected data (if existing - otherwise the raw data)
+            #' between the start_exposure and stop_exposure events.
             calculate_response = function() {
               if (!is.null(self$corrected_data_long)) {
                 dat <- self$corrected_data_long
@@ -145,7 +145,7 @@ odorMeasurement <-
               response <- c()
               for(i in 1:64) {
                 subdata <- dat[dat$channel==paste("ch",i,sep="")
-                                     & dat$timestamp > self$start_probe & dat$timestamp < self$stop_probe, ]
+                                     & dat$timestamp > self$start_exposure & dat$timestamp < self$stop_exposure, ]
                 response <- rbind(response, data.frame(channel=paste("ch",i,sep=""), value=mean(subdata$value)))
               }
               response$feature <- channel2feature(response$channel)
@@ -154,7 +154,7 @@ odorMeasurement <-
               return(invisible(self))
             },
             #' @description
-            #' ...
+            #' Calculate features by summarizing the responses by feature.
             calculate_features = function() {
               if (is.null(self$response)) self$calculate_response()
               self$features <- self$response %>%
@@ -162,13 +162,13 @@ odorMeasurement <-
                 summarize(mean_value = mean(value, na.rm = TRUE))
             },
             #' @description
-            #' ...
+            #' Getter method for the features. Calculates the features if they are not yet existing.
             get_features = function() {
               if (is.null(self$features)) self$calculate_features()
               return(self$features)
             },
             #' @description
-            #' ...
+            #' Draws a radar chart of the features.
             spider_plot = function() {
               if (is.null(self$features)) self$calculate_features()
               self$features$max <- max(self$features$mean_value)

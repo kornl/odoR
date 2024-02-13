@@ -75,7 +75,7 @@ Model the baseline (default: as a polynomial of degree 2)
 \if{html}{\out{<a id="method-odorDataset-spider_plot"></a>}}
 \if{latex}{\out{\hypertarget{method-odorDataset-spider_plot}{}}}
 \subsection{Method \code{spider_plot()}}{
-...
+Draws combined spiderplot of all features in this data set.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorDataset$spider_plot()}\if{html}{\out{</div>}}
 }

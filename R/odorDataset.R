@@ -29,7 +29,7 @@ odorDataset <-
               self$measurements[[length(dataset$measurements)+1]] <- list(measurement=measurement, label=label, concentration=concentration)
             },
             #' @description
-            #' ...
+            #' Draws combined spiderplot of all features in this data set.
             spider_plot = function() {
               df <- c()
               labels <- c()

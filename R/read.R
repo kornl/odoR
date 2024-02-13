@@ -58,8 +58,8 @@ read.odor <- function (filename, warn=TRUE) {
   start <- ymd_hms(pluck(json_meta_data, "data", "started_at"))
   stop <- ymd_hms(pluck(json_meta_data, "data", "stopped_at"))
   events <- pluck(json_meta_data, "data", "measurement_events")
-  start_probe <- tryCatch(ymd_hms(events[1,2]), error=function(err) {if (warn) warning(paste("No start event in file:", filename, sep=" ")); NA})
-  stop_probe <- tryCatch(ymd_hms(events[2,2]), error=function(err) {if (warn) warning(paste("No end event in file:", filename, sep=" ")); NA} )
+  start_exposure <- tryCatch(ymd_hms(events[1,2]), error=function(err) {if (warn) warning(paste("No start event in file:", filename, sep=" ")); NA})
+  stop_exposure <- tryCatch(ymd_hms(events[2,2]), error=function(err) {if (warn) warning(paste("No end event in file:", filename, sep=" ")); NA} )
   data <- read_csv(filename, skip = 4, show_col_types = FALSE)
   data$timestamp <- ymd_hms(data[[1]])
   data_wide <- data[,-1]
@@ -77,5 +77,5 @@ read.odor <- function (filename, warn=TRUE) {
 
   return(odorMeasurement$new(data_wide=data_wide, data_long=data_long, baseline_data=baseline_data,
               name=name, start=start, stop=stop,
-              start_probe=start_probe, stop_probe=stop_probe, meta_data=json_meta_data))
+              start_exposure=start_exposure, stop_exposure=stop_exposure, meta_data=json_meta_data))
 }

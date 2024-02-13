@@ -18,7 +18,8 @@ A ggplot2 graph object.
 Plots the data of a single data set.
 }
 \details{
-For details ...
+Plots the data over the time. For each sensor type (base and features) as well as for temperature and humidity there will be a facet showing the corresponding data.
+The events of the measurement will be shown as vertical lines.
 }
 \examples{
 

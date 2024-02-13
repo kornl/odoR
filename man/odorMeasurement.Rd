@@ -32,23 +32,23 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 
 \item{\code{baseline_data}}{baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.}
 
-\item{\code{response}}{...}
+\item{\code{response}}{data.frame of the calculated responses from this measurement for each sensor}
 
 \item{\code{name}}{Name of the measurement. If read from a csv file the value that was in the included JSON meta data in the field name.}
 
-\item{\code{start}}{...}
+\item{\code{start}}{POSIXct object representing the start time of the measurement}
 
-\item{\code{stop}}{...}
+\item{\code{stop}}{POSIXct object representing the stop/end time of the measurement}
 
-\item{\code{start_probe}}{...}
+\item{\code{start_exposure}}{POSIXct object representing the start time of exposure to a test substance}
 
-\item{\code{stop_probe}}{...}
+\item{\code{stop_exposure}}{POSIXct object representing the end time of exposure to a test substance}
 
-\item{\code{base_line_models}}{...}
+\item{\code{base_line_models}}{list of models to fit the base line}
 
-\item{\code{corrected_data_long}}{...}
+\item{\code{corrected_data_long}}{baseline corrected or residualized data}
 
-\item{\code{features}}{...}
+\item{\code{features}}{Summarized responses by features}
 }
 \if{html}{\out{</div>}}
 }
@@ -80,8 +80,8 @@ Create a odorMeasurement object.
   name = NULL,
   start = NULL,
   stop = NULL,
-  start_probe = NULL,
-  stop_probe = NULL
+  start_exposure = NULL,
+  stop_exposure = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -96,17 +96,15 @@ Create a odorMeasurement object.
 
 \item{\code{baseline_data}}{baseline data as given in the header. Perhaps not that useful, see the discussion about falling response values.}
 
-\item{\code{name}}{...}
+\item{\code{name}}{Name of the measurement as character string}
 
-\item{\code{start}}{...}
+\item{\code{start}}{POSIXct object representing the start time of the measurement}
 
-\item{\code{stop}}{...}
+\item{\code{stop}}{POSIXct object representing the stop/end time of the measurement}
 
-\item{\code{start_probe}}{...}
+\item{\code{start_exposure}}{POSIXct object representing the start time of exposure to a test substance}
 
-\item{\code{stop_probe}}{...}
-
-\item{\code{response}}{...}
+\item{\code{stop_exposure}}{POSIXct object representing the end time of exposure to a test substance}
 }
 \if{html}{\out{</div>}}
 }
@@ -164,7 +162,8 @@ Correct the data by subtracting the baseline.
 \if{html}{\out{<a id="method-odorMeasurement-calculate_response"></a>}}
 \if{latex}{\out{\hypertarget{method-odorMeasurement-calculate_response}{}}}
 \subsection{Method \code{calculate_response()}}{
-...
+Calculate the responses for each sensor as the mean of the values of the corrected data (if existing - otherwise the raw data)
+between the start_exposure and stop_exposure events.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$calculate_response()}\if{html}{\out{</div>}}
 }
@@ -174,7 +173,7 @@ Correct the data by subtracting the baseline.
 \if{html}{\out{<a id="method-odorMeasurement-calculate_features"></a>}}
 \if{latex}{\out{\hypertarget{method-odorMeasurement-calculate_features}{}}}
 \subsection{Method \code{calculate_features()}}{
-...
+Calculate features by summarizing the responses by feature.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$calculate_features()}\if{html}{\out{</div>}}
 }
@@ -184,7 +183,7 @@ Correct the data by subtracting the baseline.
 \if{html}{\out{<a id="method-odorMeasurement-get_features"></a>}}
 \if{latex}{\out{\hypertarget{method-odorMeasurement-get_features}{}}}
 \subsection{Method \code{get_features()}}{
-...
+Getter method for the features. Calculates the features if they are not yet existing.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$get_features()}\if{html}{\out{</div>}}
 }
@@ -194,7 +193,7 @@ Correct the data by subtracting the baseline.
 \if{html}{\out{<a id="method-odorMeasurement-spider_plot"></a>}}
 \if{latex}{\out{\hypertarget{method-odorMeasurement-spider_plot}{}}}
 \subsection{Method \code{spider_plot()}}{
-...
+Draws a radar chart of the features.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$spider_plot()}\if{html}{\out{</div>}}
 }
