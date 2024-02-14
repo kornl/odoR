@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt]{report}
-\usepackage{cmap}
+%\usepackage{cmap}
 \usepackage[utf8]{inputenc}
 
 \usepackage[T1]{fontenc}
