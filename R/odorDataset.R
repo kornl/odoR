@@ -49,6 +49,35 @@ odorDataset <-
               colnames(df2) <- c("max", "min", labels)
               rownames(df2) <- df$feature
               radarchart(as.data.frame(t(df2)), maxmin=TRUE)
+            },
+            #' @description
+            #' Getter method for the features. Calculates the features if they are not yet existing.
+            get_features = function() {
+              df <- c()
+              labels <- c()
+              for (m in self$measurements) {
+                if (is.null(df)) {
+                  df <- m$measurement$get_features()[c("feature", "mean_value")]
+                } else {
+                  df <- full_join(df, m$measurement$get_features()[c("feature", "mean_value")], by = "feature")
+                }
+                labels <- c(labels, m$label)
+              }
+              df <- as.data.frame(df)
+              colnames(df) <- c("feature", labels)
+              rownames(df) <- df$feature
+              return(df)
+            },
+            #' @description
+            #' Principle component analysis of the features.
+            pca = function() {
+              df <- t(self$get_features()[,-1])
+              df <- scale(df)
+              result <- prcomp(df)
+              summary(result)
+              screeplot(result, type="lines")
+              biplot(result)
+              return(result)
             }
           )
   )
