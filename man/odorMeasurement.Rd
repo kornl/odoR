@@ -144,9 +144,16 @@ Default is TRUE to reduce extrapolation errors. If there are still major effects
 \subsection{Method \code{residualize()}}{
 Residualize.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$residualize()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{odorMeasurement$residualize(include_factors = c("humidity", "temperature"))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{include_factors}}{factors to include as explaining variables. Default is humidity and temperature.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-odorMeasurement-correct_for_baseline"></a>}}

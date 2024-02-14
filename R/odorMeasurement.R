@@ -106,13 +106,14 @@ odorMeasurement <-
             },
             #' @description
             #' Residualize.
-            residualize = function() {
+            #' @param include_factors factors to include as explaining variables. Default is humidity and temperature.
+            residualize = function(include_factors=c("humidity", "temperature")) {
               data_wide <- self$data_wide
               for (i in (1:64)[-base_channels]) {
                 y <- paste("ch", i, sep="")
                 f <- as.formula(
                   paste(y,
-                        paste(c(paste("ch", base_channels, sep=""), "humidity", "temperature"), collapse = " + "),
+                        paste(c(paste("ch", base_channels, sep=""), include_factors), collapse = " + "),
                         sep = " ~ "))
                 mod <- lm(f, data = data_wide)
                 data_wide[[y]] <- residuals(mod)
