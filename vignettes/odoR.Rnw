@@ -37,7 +37,7 @@ library(purrr)
 \section*{Example}
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 library(odoR)
-file <- system.file("extdata", "Sterillium-K100.csv", package = "odoR")
+file <- system.file("extdata", "Sterillium-K100.csv.gz", package = "odoR")
 dat <- read.odor(file)
 plot.odor(dat)
 @
@@ -60,7 +60,7 @@ plot.odor(dat)
 
 <<fig.width=12, fig.height=12, out.width="\\linewidth", out.height="\\linewidth", fig.align="center">>=
 library(odoR)
-file <- system.file("extdata", "Effect_Opening_Door-25.01.2024.csv", package = "odoR")
+file <- system.file("extdata", "Effect_Opening_Door-25.01.2024.csv.gz", package = "odoR")
 dat <- read.odor(file)
 plot.odor(dat)
 @
@@ -96,7 +96,7 @@ dataset$add_measurement(dat)
 <<>>=
 dataset <- odorDataset$new()
 for (file in dir(system.file("extdata", package = "odoR"))) {
-  if (file=="Sterillium-K100.csv") next
+  if (file=="Sterillium-K100.csv.gz") next
   dat <- read.odor(system.file("extdata", file, package = "odoR"))
   dat$residualize()
   dat$spider_plot()
