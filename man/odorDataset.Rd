@@ -34,6 +34,8 @@ Kornelius Rohmeyer \email{rohmeyer@small-projects.de}
 \item \href{#method-odorDataset-new}{\code{odorDataset$new()}}
 \item \href{#method-odorDataset-add_measurement}{\code{odorDataset$add_measurement()}}
 \item \href{#method-odorDataset-spider_plot}{\code{odorDataset$spider_plot()}}
+\item \href{#method-odorDataset-get_features}{\code{odorDataset$get_features()}}
+\item \href{#method-odorDataset-pca}{\code{odorDataset$pca()}}
 \item \href{#method-odorDataset-clone}{\code{odorDataset$clone()}}
 }
 }
@@ -78,6 +80,26 @@ Model the baseline (default: as a polynomial of degree 2)
 Draws combined spiderplot of all features in this data set.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{odorDataset$spider_plot()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-odorDataset-get_features"></a>}}
+\if{latex}{\out{\hypertarget{method-odorDataset-get_features}{}}}
+\subsection{Method \code{get_features()}}{
+Getter method for the features. Calculates the features if they are not yet existing.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{odorDataset$get_features()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-odorDataset-pca"></a>}}
+\if{latex}{\out{\hypertarget{method-odorDataset-pca}{}}}
+\subsection{Method \code{pca()}}{
+Principle component analysis of the features.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{odorDataset$pca()}\if{html}{\out{</div>}}
 }
 
 }
